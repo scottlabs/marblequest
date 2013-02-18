@@ -1,0 +1,162 @@
+<html>
+<head>
+	<title>Marble Quest: Level Generator</title>
+	<style type="text/css">
+	body, html {
+		margin: 0;
+		padding: 0;
+		margin-bottom: 200px;
+	}
+	#boxes {
+		width: 600px;
+		float: left;
+	}
+	.box {
+		float: left;
+		width: 20px;
+		height: 20px;
+		border: 1px solid #ccc;
+	}
+	.box:hover {
+		background: #aaa;
+	}
+	.box.selected {
+		background: #333;
+	}
+	.box.selected.goal {
+		background: blue;
+	}
+	#code {
+		font-family: monospace;
+		float: right;
+		width: 500px;
+	}
+	#code_input {
+		float: right;
+	}
+	.clear {
+		clear: both;
+	}
+	textarea {
+		width: 300px;
+		height: 300px;
+		margin-right: 50px;
+	}
+	</style>
+</head>
+<body>
+	<select id="type" style="position: absolute; top: 200px; left: 500px;"><option>Block</option><option>Marble</option><option>Goal</option></select>
+	<div id="boxes"></div><br class="clear" />
+	<textarea id="code_input"></textarea>
+	<div id="code"></div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script type="text/javascript">
+	var cols = 16;
+	var rows = 16;
+	for (var i=0;i<cols;i++) {
+		for (var j=0;j<rows;j++) {
+			$('#boxes').append('<div class="box" rel="{x:'+i+',y:'+j+'}"></div>');	
+		}
+		$('#boxes').append('<div style="clear: both;"></div>');
+		
+
+	}
+
+	
+
+	box_size = 20;
+
+	$('.box').click(function(){
+
+		if ($(this).hasClass('selected')) {
+			
+			$(this).removeClass('selected').removeClass('Block').removeClass('Goal').removeClass('Marble');
+		} else {
+
+			$(this).addClass('selected').addClass($('#type').val());
+		}
+		generateCode();
+	});
+
+	var setBoxes = function(input) {
+		input = input.split('children.push_back(new ');
+		var type,vals,x,y;
+		var boxes = $('.box');
+		boxes.removeClass('selected');
+		$.each(input,function(i,idx){
+			idx = idx.trim();
+			idx = idx.split('(');
+			if (idx[0] && idx[1]) {
+				type = idx[0];
+				
+				vals = idx[1].split(')').shift().split(',');
+				x = parseInt(vals[0]);
+				y = parseInt(vals[1]);
+				$(boxes[y+(x*cols)]).addClass('selected').addClass(type);	
+			}
+			
+			
+		});
+		
+	}
+
+
+	var generateCode = function() {
+		var code = '';
+		var box_count = 0;
+		var i = 0;
+		var x,y;
+
+		$('.box').each(function(){
+			//y = i % cols;
+			//x = i - (y*cols);
+			var rel = $(this).attr('rel');
+			rel = rel.split(',');
+
+			
+			x = rel[0].split(':').pop();
+			y = rel[1].split(':').pop().split('}').shift();
+			
+			var type;
+			if ($(this).hasClass('Goal')) {
+				type = 'Goal';
+			} else if ($(this).hasClass('Marble')) {
+				type = 'Marble';
+			} else {
+				type = 'Block';
+			}
+			code += ($(this).hasClass('selected')) ? 'children.push_back(new '+type+'('+x+','+y+'));<br />' : '';
+			
+			if (box_count%cols==cols-1) {
+				//code += '<br />';
+			}
+			box_count++;
+			i++;
+		});
+		//code += '};';
+		$('#code').html(code);
+		localStorage['boxes'] = $('#code').html();
+		//setBoxes(code);
+		
+	}
+
+	var autoFill = function(val) {
+		setBoxes(val);
+		generateCode();
+
+	}
+
+	$('#code_input').keyup(function(){
+		autoFill($(this).val());
+	});
+	console.log(localStorage['boxes']);
+	$('#code_input').val("<br />"+localStorage['boxes']);
+	autoFill(localStorage['boxes']);
+	//$('#code_input').val(localStorage['boxes']);
+
+
+	//generateCode();
+</script>
+</body>
+</html>
