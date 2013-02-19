@@ -17,7 +17,7 @@ class Wall : public Actor
     Wall(int start_x, int start_y, int end_x, int end_y);
 
     virtual void draw(double* matrix,int _x,int _y);
-    virtual boolean onScreen(double _x, double _y);
+    //virtual boolean onScreen(double _x, double _y);
     double slope;
     double b;
     double length;

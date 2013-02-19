@@ -17,6 +17,7 @@ class Block : public Actor
     int x;
     int y;
     virtual void draw(double* matrix,int _x,int _y);
-    virtual boolean collision(double _x, double _y);    
+    virtual int getX();
+    virtual int getY();
 };
 #endif

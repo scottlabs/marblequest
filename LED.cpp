@@ -37,9 +37,9 @@ void LED::discoverPorts() {
 
 double LED::parsePixel(double pixel, int total_pixel_count) {  
   if (total_pixel_count==1) {
-    pixel = pixel/12*2; 
+    pixel = pixel/12*4; 
   } else if (total_pixel_count==2) {
-    pixel = pixel/4;
+    pixel = pixel/3;
   } else if (total_pixel_count==3) {
     pixel = pixel/3;    
   } else if (total_pixel_count==4) {

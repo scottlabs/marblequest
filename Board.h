@@ -12,6 +12,7 @@
 #include <vector>
 #include <iterator>
 
+
 #include "Arduino.h"
 #include "Wall.h"
 #include "Marble.h"
@@ -36,8 +37,8 @@ class Board
     std::vector <Actor *> children;
     //Actor* children[2];
     //std::vector<boost::variant<Marble,Wall> > vec2;
-    int start_time;
-    int wait;
+    unsigned int start_time;
+    unsigned int wait;
     int matrix_size;
     int cols;
     int rows;
@@ -45,5 +46,18 @@ class Board
     int level_height;    
     double x;
     double y;
+    
+    unsigned int level_time;
+    unsigned int level_wait;
+    
+    int level_state;
+    void level_one();
+    void level_one_populate();
+    void complete_level();
+    
+    boolean auto_calibrate;
+    boolean populated;
+    
+    boolean playing;
 };
 #endif

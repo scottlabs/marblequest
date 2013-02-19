@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Marble Quest: Level Generator</title>
+	<title>Marble Quest: Text Generator</title>
 	<style type="text/css">
 	body, html {
 		margin: 0;
@@ -52,8 +52,8 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 <script type="text/javascript">
-	var cols = 22;
-	var rows = 22;
+	var cols = 8;
+	var rows = 8;
 	for (var i=0;i<cols;i++) {
 		for (var j=0;j<rows;j++) {
 			$('#boxes').append('<div class="box" rel="{x:'+i+',y:'+j+'}"></div>');	
@@ -127,7 +127,8 @@
 			} else {
 				type = 'Block';
 			}
-			code += ($(this).hasClass('selected')) ? 'children.push_back(new '+type+'('+x+','+y+'));<br />' : '';
+
+			code += ($(this).hasClass('selected')) ? 'setPixel(matrix,'+(7-x)+','+(y)+',value);<br />' : '';
 			
 			if (box_count%cols==cols-1) {
 				//code += '<br />';
@@ -137,7 +138,7 @@
 		});
 		//code += '};';
 		$('#code').html(code);
-		localStorage['boxes'] = $('#code').html();
+		//localStorage['boxes'] = $('#code').html();
 		//setBoxes(code);
 		
 	}
@@ -151,9 +152,9 @@
 	$('#code_input').keyup(function(){
 		autoFill($(this).val());
 	});
-	console.log(localStorage['boxes']);
+	//console.log(localStorage['boxes']);
 	$('#code_input').val("<br />"+localStorage['boxes']);
-	autoFill(localStorage['boxes']);
+	//autoFill(localStorage['boxes']);
 	//$('#code_input').val(localStorage['boxes']);
 
 

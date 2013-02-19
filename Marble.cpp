@@ -52,13 +52,23 @@ void Marble::move(double _x, double _y) {
 }
 
 
-boolean Marble::collides(double val, double point_val) {
+boolean Marble::collides(double val, double target_val, double static_val, double static_target_val) {
   //Serial.print(point->x);
-  int check_val = round(val);
-  int check_point_val = round(point_val);
+  int rounded_val = round(val);
+  int rounded_target_val = round(target_val);
+  int rounded_static_val = round(static_val);
+  int rounded_static_target_val = round(static_target_val);
   
-  return false;
-  if (check_val == check_point_val) {
+  boolean debug = false;
+  if (rounded_val == rounded_target_val && rounded_static_val == rounded_static_target_val) {
+    if (debug) {
+      Serial.print("check val: ");
+      //Serial.println(check_val);
+      Serial.print("point val: ");
+      //Serial.println(check_point_val);
+      delay(50);
+    }
+
     return true; 
   }
   return false;  

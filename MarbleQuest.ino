@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <iterator>
+#include <cstdlib>
 
 
 #include "Point.h"
@@ -13,14 +14,16 @@
 #include "Board.h"
 #include "LED.h"
 #include "Input.h"
+#include "Fade.h"
 
 
 LED led;
-
 Board board;
+
 //Board board(level_one1,8,8);
 //Board board(level_twoa,11,11);
 
+unsigned int start_time;
 // the setup routine runs once when you press reset:
 void setup() {  
 
@@ -32,88 +35,68 @@ void setup() {
   Serial.begin(9600);
   //board.move(0,0);
   
-  delay(100);
-  
-  //Serial.println("Marble Quest!");
-  delay(100);
+  start_time = millis();
+
 }
 Input input;
 
 Point val;
 
 
-double speed = 0.5;
-double cutoff = 0.0;
+double speed = 0.4;
+double cutoff = 0.1;
 double matrix[64]; // 8 x 8
 
 int count_debug = 0;
-
+//Fade::Fade(int _x, int _y, int _width, int _height, double _speed, boolean _repeat, double temp, boolean temp_up)
+//Fade intro_fade(0,0,8,8,0.03,false,2,false);  
 void loop() {
 
+  boolean auto_calibrate = false;
+  
+  if (0 && millis() - start_time < 2200) {
+    for (unsigned int i = 0;i<64;i++) {
+      matrix[i] = 0;
+    }
+    //intro_fade.draw(matrix,8,8);
 
-  //Serial.println(1,DEC);return;
-  
-  //input.calibrate();return;
-  val = input.val();
 
-  //val.x = -2;
-  //val.y = -2;
+  } else {
+    ///intro_fade = null;
+    //Serial.println("draw");    
+    //input.calibrate();return;
+    val = input.val();
   
-  double move_x = 0;
-  double move_y = 0;
-  //Serial.println(val.x);
-  if (val.x <-1*cutoff) {
-    move_x = 1 * speed * val.x;
-  } 
-  else if (val.x > cutoff) {
-    move_x = speed * val.x;
-  }
-  if (val.y < -1 * cutoff) {
-    move_y = 1 * speed * val.y;
-  } 
-  else if (val.y > cutoff) {
-    move_y = speed * val.y;
-  }
-  
-  
-  
-  boolean debug = false;
-  if (debug && count_debug > 100000) {
-    Serial.print(" move x: ");
-  //Serial.print(move_x);
-    Serial.print(" move y: ");  
-  //Serial.print(move_y);
-    Serial.println(" ");
-    delay(2000);
-    count_debug = 0;
-  }
-  //count_debug++;
-  //move_x = -0.1;
-  //move_y = -0.1;
-  //board.move(move_x, move_y);
-  board.move(move_x, move_y);
-  //void move2(double move_x, double move_y);
- 
-  
-
-  //board.move(1,1);
-
-  boolean auto_calibrate = board.draw(matrix);
-  /*
-  for (int i=0;i<8;i++) {
-    for (int j=0;j<8;j++) {
-      //matrix[i+(j*8)] = board.getPointVal(i,j);
-      matrix[i+(j*8)] = 1;
-      //matrix[i+(j*8)] = 0.2222222;
+    //val.x = -2;
+    //val.y = -2;
+    
+    double move_x = 0;
+    double move_y = 0;
+    //Serial.println(val.x);
+    if (val.x <-1*cutoff) {
+      move_x = 1 * speed * val.x;
     } 
-  } 
-  */
+    else if (val.x > cutoff) {
+      move_x = speed * val.x;
+    }
+    if (val.y < -1 * cutoff) {
+      move_y = 1 * speed * val.y;
+    } 
+    else if (val.y > cutoff) {
+      move_y = speed * val.y;
+    }
+    board.move(move_x, move_y);
+    
+    boolean auto_calibrate = board.draw(matrix);
+    
 
+  }
+  
   // arguments
   // matrix - the matrix to draw
   // boolean - whether to calibrate the levels or not. this will automatically adjust power so that a 1 LED looks the same brightness as 8 LEDs.
+    
   led.draw(matrix,auto_calibrate);
-  
 }
 
 

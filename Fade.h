@@ -12,8 +12,10 @@
 class Fade : public Actor {
   public:
     Fade(int _x, int _y, int _width, int _height, double _speed);
+    Fade(int _x, int _y, int _width, int _height, double _speed, boolean _repeat, double _temp, boolean _temp_up);
     virtual void draw(double* matrix, int rows, int cols);
   private:
+    boolean repeat;
     int x;
     int y;
     int width;

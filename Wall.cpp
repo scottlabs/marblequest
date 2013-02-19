@@ -79,6 +79,7 @@ void Wall::draw(double* matrix,int _x,int _y) {
   
   //setPixel(matrix,0,0,0.5);
 }
-
+/*
 boolean Wall::onScreen(double _x, double _y) {
 }
+*/

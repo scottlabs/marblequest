@@ -37,4 +37,4 @@ void Actor::move(double _x, double _y){
 }
 
 int Actor::getX(){ return 0; }
-int Actor::getY(){ return 0;}
+int Actor::getY(){ return 0; }
