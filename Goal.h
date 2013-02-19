@@ -19,7 +19,7 @@ class Goal : public Actor {
     Goal(int _x, int _y);
     virtual void draw(double* matrix, int _x, int _y);
     boolean collides(Marble marble, double board_x, double board_y);
-    void heart();
+    void heart(unsigned int _hearts);
   private:
     int width;
     int height;
@@ -32,7 +32,8 @@ class Goal : public Actor {
     int state;
     void drawBox(double* matrix, int _x, int _y);
     void drawHeart(double* matrix, int _x, int _y);
-
+    unsigned int heart_begin;
+    unsigned int hearts;
 
 
 };

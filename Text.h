@@ -14,8 +14,12 @@ class Text : public Actor
   public:
     Text(unsigned int _letter);
     virtual void draw(double* matrix,int _x,int _y);
+    void destroy();
+    double x;
+    double y;
   private:
     unsigned int letter;
     double value;
+
 };
 #endif

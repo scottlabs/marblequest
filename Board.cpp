@@ -15,6 +15,7 @@
 
 #include <math.h>
 
+#include "MemoryFree.h"
 
 
 #include <iterator>
@@ -219,81 +220,111 @@ void Board::complete_level() {
   children.clear();
   playing = false;
   marble = Marble(-1,-1);
-  goal.heart();
-
+  unsigned int hearts;
+  unsigned int total_level_time = millis() - level_wait;
+  
+  if (total_level_time < 5000) {  
+    hearts = 6;
+  } else if (total_level_time < 6000) {
+    hearts = 5;
+  } else if (total_level_time < 7000) {
+    hearts = 4;
+  } else if (total_level_time < 12000) {
+    hearts = 3;
+  } else if (total_level_time < 20000) {
+    hearts = 2;
+  } else {
+    hearts = 1;
+  }
+  
+  goal.heart(hearts);
+  //Serial.println(millis()-level_wait);
+  
 }
+
+
 void Board::level_one() {
   
   populated = false;
-  //children.push_back(new Text(1));
+  //Serial.println("level one");
+  children.push_back(new Text(1));
+  //Serial.println(children.size());
   //children.clear();
-  level_wait = 01;
+  //Serial.print("size0: ");  
+  //Serial.println(children.size());  
+  level_wait = 2500;
   level_time = millis();
   level_state = 1;
+  
 }
 void Board::level_one_populate() {
+  //Serial.print("size1: ");
+  //Serial.println(children.size());    
+  
+  //children[0] = new Text(2);
   children.clear();
+  //Serial.print("size2: ");  
+  //Serial.println(children.size());    
   start_time = millis();
   playing = true;
   marble = Marble(3,3);
 
-  goal = Goal(8,10);
+  goal = Goal(10,10);
+
   //goal = Goal(3,3);
   children.push_back(new Block(2,2));
-  children.push_back(new Block(2,3));
-  children.push_back(new Block(2,4));
-  children.push_back(new Block(2,5));
-  children.push_back(new Block(2,6));
-  children.push_back(new Block(2,7));
-  children.push_back(new Block(2,8));
-  children.push_back(new Block(3,2));
-  children.push_back(new Block(3,8));
-  children.push_back(new Block(4,2));
-  children.push_back(new Block(4,8));
-  children.push_back(new Block(5,2));
-  children.push_back(new Block(5,8));
-  children.push_back(new Block(6,2));
-  children.push_back(new Block(6,3));
-  children.push_back(new Block(6,4));
-  children.push_back(new Block(6,6));
-  children.push_back(new Block(6,7));
-  children.push_back(new Block(6,8));
-  children.push_back(new Block(7,2));
-  children.push_back(new Block(7,8));
-  children.push_back(new Block(8,2));
-  children.push_back(new Block(8,8));
-  children.push_back(new Block(8,9));
-  children.push_back(new Block(8,10));
-  children.push_back(new Block(8,11));
-  children.push_back(new Block(8,12));
-  children.push_back(new Block(8,13));
-  children.push_back(new Block(9,2));
-  children.push_back(new Block(9,4));
-  children.push_back(new Block(9,5));
-  children.push_back(new Block(9,6));
-  children.push_back(new Block(9,7));
-  children.push_back(new Block(9,8));
-  children.push_back(new Block(9,13));
-  children.push_back(new Block(10,2));
-  children.push_back(new Block(10,8));
-  children.push_back(new Block(10,13));
-  children.push_back(new Block(11,2));
-  children.push_back(new Block(11,5));
-  children.push_back(new Block(11,8));
-  children.push_back(new Block(11,13));
-  children.push_back(new Block(12,2));
-  children.push_back(new Block(12,5));
-  children.push_back(new Block(12,13));
-  children.push_back(new Block(13,2));
-  children.push_back(new Block(13,3));
-  children.push_back(new Block(13,4));
-  children.push_back(new Block(13,5));
-  children.push_back(new Block(13,6));
-  children.push_back(new Block(13,7));
-  children.push_back(new Block(13,8));
-  children.push_back(new Block(13,9));
-  children.push_back(new Block(13,10));
-  children.push_back(new Block(13,11));
-  children.push_back(new Block(13,12));
-  children.push_back(new Block(13,13));
+children.push_back(new Block(2,3));
+children.push_back(new Block(2,4));
+children.push_back(new Block(2,5));
+children.push_back(new Block(2,6));
+children.push_back(new Block(2,7));
+children.push_back(new Block(2,8));
+children.push_back(new Block(3,2));
+children.push_back(new Block(3,8));
+children.push_back(new Block(4,2));
+children.push_back(new Block(4,8));
+children.push_back(new Block(5,2));
+children.push_back(new Block(5,8));
+children.push_back(new Block(6,2));
+children.push_back(new Block(6,3));
+children.push_back(new Block(6,7));
+children.push_back(new Block(6,8));
+children.push_back(new Block(7,2));
+children.push_back(new Block(7,8));
+children.push_back(new Block(8,2));
+children.push_back(new Block(8,8));
+children.push_back(new Block(8,9));
+children.push_back(new Block(8,10));
+children.push_back(new Block(8,11));
+children.push_back(new Block(8,12));
+children.push_back(new Block(8,13));
+children.push_back(new Block(9,2));
+children.push_back(new Block(9,4));
+children.push_back(new Block(9,5));
+children.push_back(new Block(9,6));
+children.push_back(new Block(9,7));
+children.push_back(new Block(9,8));
+children.push_back(new Block(9,13));
+children.push_back(new Block(10,2));
+children.push_back(new Block(10,8));
+children.push_back(new Block(10,13));
+children.push_back(new Block(11,2));
+children.push_back(new Block(11,5));
+children.push_back(new Block(11,8));
+children.push_back(new Block(11,13));
+children.push_back(new Block(12,2));
+children.push_back(new Block(12,5));
+children.push_back(new Block(12,13));
+children.push_back(new Block(13,2));
+children.push_back(new Block(13,3));
+children.push_back(new Block(13,4));
+children.push_back(new Block(13,5));
+children.push_back(new Block(13,6));
+children.push_back(new Block(13,7));
+children.push_back(new Block(13,8));
+children.push_back(new Block(13,9));
+children.push_back(new Block(13,10));
+children.push_back(new Block(13,11));
+children.push_back(new Block(13,12));
+children.push_back(new Block(13,13));
 }

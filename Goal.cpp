@@ -33,7 +33,8 @@ Goal::Goal(int _x, int _y){
   speed = 0.07;
   //go_heart = false;
   //heart_count = 0;
-  
+  heart_begin = 0;
+  hearts = 0;
 }
 boolean Goal::collides(Marble marble, double board_x, double board_y) {
   int marble_x = round(marble.x - board_x);
@@ -43,9 +44,10 @@ boolean Goal::collides(Marble marble, double board_x, double board_y) {
   }
   return false;
 }
-void Goal::heart() {
+void Goal::heart(unsigned int _hearts) {
   state = 1; // 1 is heart
   //speed = 0.2;
+  hearts = _hearts;
   time = millis();
 }
 
@@ -59,13 +61,17 @@ void Goal::drawBox(double* matrix, int _x, int _y) {
 }
 
 void Goal::drawHeart(double* matrix, int _x, int _y) {
+  if (heart_begin==0) { heart_begin = millis(); }
   //int goal_x = round(x) + _x; // this is the 0,0 part of the goal  
   //int goal_y = round(y) + _y; // this is the 0,0 part of the goal
   //drawBox(matrix,_x,_y);
-  setPixel(matrix,6,1,temp);
-  setPixel(matrix,6,2,temp);    
-  setPixel(matrix,6,5,temp);    
-  setPixel(matrix,6,6,temp);        
+
+  unsigned int heart_length = 840;
+  if (millis() - heart_begin < hearts * heart_length) { // should be 5
+    setPixel(matrix,6,1,temp);
+    setPixel(matrix,6,2,temp);    
+    setPixel(matrix,6,5,temp);    
+    setPixel(matrix,6,6,temp);        
     
     for (int i=0;i<8;i++) {
       setPixel(matrix,5,i,temp);
@@ -80,6 +86,8 @@ void Goal::drawHeart(double* matrix, int _x, int _y) {
     for (int i=3;i<5;i++) {
       setPixel(matrix,1,i,temp);
     }
+  }
+  
 }
 void Goal::draw(double* matrix, int _x, int _y) {
   if (state==0) {

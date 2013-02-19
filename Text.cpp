@@ -11,49 +11,54 @@ Text::Text(unsigned int _letter)
 {
   letter = _letter;
   value = 1;
+  x = 0;
+  y = 0;
 }
-
+void Text::destroy() {
+  x += -9;
+  y += -9;
+}
 void Text::draw(double* matrix,int _x,int _y) {
   if (letter==1) {
-setPixel(matrix,7,4,value);
-setPixel(matrix,6,2,value);
-setPixel(matrix,6,3,value);
-setPixel(matrix,6,4,value);
-setPixel(matrix,5,4,value);
-setPixel(matrix,4,4,value);
-setPixel(matrix,3,4,value);
-setPixel(matrix,2,4,value);
-setPixel(matrix,1,2,value);
-setPixel(matrix,1,3,value);
-setPixel(matrix,1,4,value);
-setPixel(matrix,1,5,value);
-setPixel(matrix,1,6,value);
+setPixel(matrix,x+7,y+4,value);
+setPixel(matrix,x+6,y+2,value);
+setPixel(matrix,x+6,y+3,value);
+setPixel(matrix,x+6,y+4,value);
+setPixel(matrix,x+5,y+4,value);
+setPixel(matrix,x+4,y+4,value);
+setPixel(matrix,x+3,y+4,value);
+setPixel(matrix,x+2,y+4,value);
+setPixel(matrix,x+1,y+2,value);
+setPixel(matrix,x+1,y+3,value);
+setPixel(matrix,x+1,y+4,value);
+setPixel(matrix,x+1,y+5,value);
+setPixel(matrix,x+1,y+6,value);
   } else if (letter==2) {
-      setPixel(matrix,7,3,value);
-setPixel(matrix,7,4,value);
-setPixel(matrix,6,2,value);
-setPixel(matrix,6,5,value);
-setPixel(matrix,5,5,value);
-setPixel(matrix,4,4,value);
-setPixel(matrix,3,3,value);
-setPixel(matrix,2,2,value);
-setPixel(matrix,1,2,value);
-setPixel(matrix,1,3,value);
-setPixel(matrix,1,4,value);
-setPixel(matrix,1,5,value);
+setPixel(matrix,x+7,y+3,value);  
+setPixel(matrix,x+7,y+4,value);
+setPixel(matrix,x+6,y+2,value);
+setPixel(matrix,x+6,y+5,value);
+setPixel(matrix,x+5,y+5,value);
+setPixel(matrix,x+4,y+4,value);
+setPixel(matrix,x+3,y+3,value);
+setPixel(matrix,x+2,y+2,value);
+setPixel(matrix,x+1,y+2,value);
+setPixel(matrix,x+1,y+3,value);
+setPixel(matrix,x+1,y+4,value);
+setPixel(matrix,x+1,y+5,value);
   } else if (letter==3) {
-    setPixel(matrix,7,3,value);
-setPixel(matrix,7,4,value);
-setPixel(matrix,6,2,value);
-setPixel(matrix,6,5,value);
-setPixel(matrix,5,5,value);
-setPixel(matrix,4,4,value);
-setPixel(matrix,4,5,value);
-setPixel(matrix,3,5,value);
-setPixel(matrix,2,2,value);
-setPixel(matrix,2,5,value);
-setPixel(matrix,1,3,value);
-setPixel(matrix,1,4,value); 
+setPixel(matrix,x+7,y+3,value);
+setPixel(matrix,x+7,y+4,value);
+setPixel(matrix,x+6,y+2,value);
+setPixel(matrix,x+6,y+5,value);
+setPixel(matrix,x+5,y+5,value);
+setPixel(matrix,x+4,y+4,value);
+setPixel(matrix,x+4,y+5,value);
+setPixel(matrix,x+3,y+5,value);
+setPixel(matrix,x+2,y+2,value);
+setPixel(matrix,x+2,y+5,value);
+setPixel(matrix,x+1,y+3,value);
+setPixel(matrix,x+1,y+4,value); 
   }
 }
 

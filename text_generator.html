@@ -128,7 +128,7 @@
 				type = 'Block';
 			}
 
-			code += ($(this).hasClass('selected')) ? 'setPixel(matrix,'+(7-x)+','+(y)+',value);<br />' : '';
+			code += ($(this).hasClass('selected')) ? 'setPixel(matrix,x+'+(7-x)+',y+'+(y)+',value);<br />' : '';
 			
 			if (box_count%cols==cols-1) {
 				//code += '<br />';
