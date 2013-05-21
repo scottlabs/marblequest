@@ -16,8 +16,6 @@ class Marble : public Actor {
     Marble(int _x, int _y);
 
     virtual void draw(double* matrix,int _x, int _y);
-    virtual void move(double _x, double _y);
-    //y_collision = marble.collides(y+move_y,children[j]->getY());        
     boolean collides(double val, double target_val, double static_val, double static_target_val);
     
     double x;

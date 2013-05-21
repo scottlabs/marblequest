@@ -22,20 +22,11 @@
 class Board
 {
   public:
-    //Board(double* _matrix, int _cols, int _rows);
     Board();
-
     boolean draw(double* matrix);
-
     void move(double move_x, double move_y);
-
-    //double getPointVal(int point_x, int point_y);
-    
   private:
-
     std::vector <Actor *> children;
-    //Actor* children[2];
-    //std::vector<boost::variant<Marble,Wall> > vec2;
     unsigned int start_time;
     unsigned int wait;
     int matrix_size;

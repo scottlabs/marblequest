@@ -15,10 +15,10 @@ class LED
     LED();
     void draw(double* matrix);
     void draw(double* matrix, boolean calibrate_levels);
-    void discoverPorts();    
   private:
     void setPortVals(int* vals, int index, int val);
     double parsePixel(double pixel, int total_pixel_count);
+    double parsePixel(double pixel, int total_pixel_count, int col);    
     
     int invertInt(int i);
     void drawRow(int index, int* row_vals);

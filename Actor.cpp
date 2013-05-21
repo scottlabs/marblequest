@@ -9,32 +9,19 @@
 
 Actor::Actor()
 {
-  value = 1;
+  value = 1; // value is our pixel brightness. default to full on and other classes can change this.
 }
 
+// function to set an individual pixel. checks that setting is valid.
 void Actor::setPixel(double* matrix, int x,int y,double val) {
   int cols = 8;
   int matrix_index = y+(x*cols);
-  if (0) {
-    Serial.print(x);
-    Serial.print(" ");
-    Serial.println(y);  
-  }
   if (x >= 0 && x < 8 && y >= 0 && y < 8 && matrix_index >= 0 && matrix_index <= 63 && val > matrix[matrix_index]) {
     matrix[y+(x*cols)] = val;  
   }
-  
 }
 
-boolean Actor::onScreen(double _x, double _y) {
-  return true; 
-}
-void Actor::draw(double* matrix, int x, int y) {
-}
-
-void Actor::move(double _x, double _y){
-  //Serial.println("actor move");
-}
+void Actor::draw(double* matrix, int x, int y) {} // stub, to be extended
 
 int Actor::getX(){ return 0; }
 int Actor::getY(){ return 0; }

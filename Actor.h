@@ -14,12 +14,9 @@ class Actor
     Actor();
     virtual void draw(double* matrix, int x, int y);
     void setPixel(double* matrix, int x,int y,double val);
-    virtual void move(double _x, double _y);
-    virtual boolean onScreen(double _x, double _y);
+
     double value;
     
-    int rows;
-    int cols;
     virtual int getX();
     virtual int getY();    
   private:

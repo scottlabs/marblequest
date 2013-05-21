@@ -1,5 +1,13 @@
 /*
   Goal.cpp - The class definition for a goal character.
+  
+  A Goal object serves two functions. It is both the object the Marble must collide with
+  (this signifying the level is complete) and is also responsible for displaying the user's
+  score via throbbing a heart a certain number of times, to indicate the level score.
+  
+  The Goal object is also responsible for detecting collision with the Marble, as the Marble
+  collision detection is only designed to deal with single pixel objects, like blocks.
+  
   Created by Kevin Scott, February 15, 2013
   Released into the public domain.
 */
@@ -10,32 +18,26 @@
 Goal::Goal(){}
 
 Goal::Goal(int _x, int _y){
-  //fade(0,0,8,8,0.1);
   
   x = _x;
   y = _y;
 
-  height = 2;
-  width = 2;
+  // these actually mean its 2x2
+  height = 1;
+  width = 1;
   
-  threshold = 1;
-  // actual height and widt
-  height -= 1;
-  width -= 1;
-  
-  temp = 1;
-  state = 0; // 0 is regular draw
+  temp = 1; // our starting value
+  state = 0; // 0 is a regular Goal object.
   time = 0;
-  
   temp_up = false;
-  //grow_step = 0;
-  
   speed = 0.07;
-  //go_heart = false;
-  //heart_count = 0;
   heart_begin = 0;
   hearts = 0;
 }
+
+// This method detects the collision between the Marble object and the Goal.
+// This resides here as the Marble collision function is designed to only deal with
+// single pixel objects, and the Goal object is multi pixel.
 boolean Goal::collides(Marble marble, double board_x, double board_y) {
   int marble_x = round(marble.x - board_x);
   int marble_y = round(marble.y - board_y);  
@@ -44,30 +46,32 @@ boolean Goal::collides(Marble marble, double board_x, double board_y) {
   }
   return false;
 }
+
+// This method flips the Goal object into a Heart object.
 void Goal::heart(unsigned int _hearts) {
   state = 1; // 1 is heart
-  //speed = 0.2;
   hearts = _hearts;
   time = millis();
 }
 
-
+// This method draws a box, representing a Goal object in a level. It is a 2x2 box that throbs.
 void Goal::drawBox(double* matrix, int _x, int _y) {
   setPixel(matrix,round(x) + _x,round(y) + _y,temp);
   setPixel(matrix,round(x) + _x + width,round(y) + _y,temp);
   setPixel(matrix,round(x) + _x,round(y) + _y + height,temp);
   setPixel(matrix,round(x) + _x + width,round(y) + _y + height,temp);
-
 }
 
+// This method that is responsible for drawing a heart a specified number
+// of times. When a user completes the level, it will display a certain number of
+// hearts depending on their time.
+//
+// This specifies which pixels to light up. 
 void Goal::drawHeart(double* matrix, int _x, int _y) {
   if (heart_begin==0) { heart_begin = millis(); }
-  //int goal_x = round(x) + _x; // this is the 0,0 part of the goal  
-  //int goal_y = round(y) + _y; // this is the 0,0 part of the goal
-  //drawBox(matrix,_x,_y);
 
-  unsigned int heart_length = 840;
-  if (millis() - heart_begin < hearts * heart_length) { // should be 5
+  unsigned int heart_length = 860;
+  if (millis() - heart_begin < hearts * heart_length) {
     setPixel(matrix,6,1,temp);
     setPixel(matrix,6,2,temp);    
     setPixel(matrix,6,5,temp);    
@@ -89,23 +93,20 @@ void Goal::drawHeart(double* matrix, int _x, int _y) {
   }
   
 }
+
+// Responsible for drawing a goal object; also will convert the Goal
+// object into heart images at the end of the game.
 void Goal::draw(double* matrix, int _x, int _y) {
   if (state==0) {
     drawBox(matrix, _x, _y);
   } else if (state==1) {
     drawHeart(matrix, _x, _y);
   }
-  
-  /*
-  if (go_heart == false) {
-    
-  } else if (go_heart == true) {
-    
-  }
-  */
   changeTemperature();
 }
 
+// Ramp our value up and down by flipping a boolean when the value hits
+// 0 or 1. Then increment the value by some amount.
 void Goal::changeTemperature() {
   if (temp >= 1) {
     temp_up = false;
